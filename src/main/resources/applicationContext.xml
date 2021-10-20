@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/tx
+    http://www.springframework.org/schema/tx/spring-tx.xsd http://mybatis.org/schema/mybatis-spring https://mybatis.org/schema/mybatis-spring.xsd">
+    <context:component-scan base-package="com.neu"/>
+    <!--  Spring用来控制业务逻辑，数据源、事务控制、AOP  -->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="url" value="${jdbc.url}"/>
+        <property name="driverClassName" value="${jdbc.driver}"/>
+        <property name="username" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
+    <!--  spring事务管理器  -->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 开启事务注解驱动 -->
+    <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
+    <!--  创建出sqlSessionFactory对象  -->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="typeAliasesPackage" value="com.neu.entity"/>
+        <property name="mapperLocations" value="classpath:mappers/*" />
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+    </bean>
+    <!--  扫描所有的mapper接口并注入  -->
+    <mybatis-spring:scan base-package="com.neu.mapper" />
+    <!--  整合Mybatis
+       1.spring管理所有组件
+       2.spring管理事务
+    -->
+
+</beans>

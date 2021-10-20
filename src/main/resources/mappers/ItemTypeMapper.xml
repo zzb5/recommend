@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.mapper.ItemTypeMapper">
+
+    <insert id="insert">
+        insert into item_type (id, code, name)
+        values (#{id}, #{code}, #{name});
+    </insert>
+    <select id="selectAll" resultType="com.neu.entity.ItemType">
+        select id, code, name
+        from item_type;
+    </select>
+
+</mapper>

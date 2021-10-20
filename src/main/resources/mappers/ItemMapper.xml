@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.mapper.ItemMapper">
+    <select id="selectAll" resultType="com.neu.entity.Item">
+        select id, name, date, link, score, type
+        from item
+    </select>
+    <select id="selectById" resultType="com.neu.entity.Item">
+        select id, name, date, link, score, type
+        from item
+        where id = #{id}
+    </select>
+    <insert id="insert">
+        insert into item (id, name, date, link, score, type)
+        values (#{id}, #{name}, #{date}, #{link}, #{score}, #{type});
+    </insert>
+    <update id="update">
+        update item
+        set type = #{type}
+        where id = #{id};
+    </update>
+    <insert id="insertBatch">
+        INSERT INTO item
+        (id, name, date, link, score, type)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id}, #{item.name}, #{item.date}, #{item.link}, #{item.score}, #{item.type})
+        </foreach>
+    </insert>
+    <update id="updateBatch">
+        <foreach collection="list" item="item">
+            update item
+            set type = #{item.type}
+            where id = #{item.id};
+        </foreach>
+    </update>
+    <select id="selectByNameLike" resultType="com.neu.entity.Item">
+        select id, name, date, link, score, type
+        from item
+        where name like '%${name}%'
+    </select>
+    <select id="selectRandom" resultType="com.neu.entity.Item">
+        select id, name, date, link, score, type
+        from item
+        where score > 4.0
+        order by rand()
+        limit 10
+    </select>
+    <update id="updateScore">
+        update item
+        set score = #{score}
+        where id = #{id};
+    </update>
+    <select id="selectRecent" resultType="com.neu.entity.Item">
+        select id, name, date, link, score, type
+        from item
+        where date in (
+        <foreach collection="list" item="date" separator=",">
+            #{date}
+        </foreach>
+        )
+    </select>
+</mapper>

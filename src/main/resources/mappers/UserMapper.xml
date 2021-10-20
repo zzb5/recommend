@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neu.mapper.UserMapper">
+
+    <select id="selectAll" resultType="com.neu.entity.User">
+        select id, username, password, nickname
+        from user
+    </select>
+    <select id="selectById" resultType="com.neu.entity.User">
+        select id, username, password, nickname
+        from user
+        where id = #{id}
+    </select>
+    <select id="selectByUsernameAndPassword" resultType="com.neu.entity.User">
+        select id, username, password, nickname
+        from user
+        where username = #{username}
+        and password = #{password}
+    </select>
+    <insert id="insert">
+        insert into user (id, username, password, nickname)
+        values (null, #{username}, #{password}, #{nickname});
+    </insert>
+    <insert id="insertBatch">
+        INSERT INTO user
+        (id, username, password, nickname)
+        VALUES
+        <foreach collection ="list" item="user" separator =",">
+            (#{user.id}, #{user.username}, #{user.password}, #{user.nickname})
+        </foreach >
+    </insert>
+
+</mapper>
