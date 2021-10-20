@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * 功能描述:
- *  version 稳定版
+ *  version git稳定版
  * @author zzb
  * @email 1135462964@qq.com
  * @date 2021-10-19 8:21
