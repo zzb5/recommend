@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * 功能描述:
- *  version 1.1 热修两次以后的版本 现在稳定了
+ *  version 稳定版
  * @author zzb
  * @email 1135462964@qq.com
  * @date 2021-10-19 8:21
